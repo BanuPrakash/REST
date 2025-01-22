@@ -1,0 +1,11 @@
+### @name="get messages"
+GET http://localhost:8080/api/messages
+Accept: application/json
+
+### @name="get messages with recipients"
+GET http://localhost:8080/api/messages/with-recipients
+Accept: application/json
+
+### @name="get message for given ID"
+GET http://localhost:8080/api/messages/1
+Accept: application/json

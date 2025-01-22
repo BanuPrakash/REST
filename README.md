@@ -918,15 +918,20 @@ PointCut: selected JoinPoint
 Advice: how aspect can be weaved like before, after, around, afterThrowing , afterReturning
 
 
-public class LogAspect {
+Day 4:
 
-    @Before("execution(* com.adobe.orderapp.service.OrderService.addProduct(..))")
-    public void logAspect(JoinPoint jp) {
-        // code
-    }
-}
+Recap:
+RESTful WS ProductController, OrderController
+GET, POST, PATCH, JSON-PATCH, DELETE and PUT
+PathVariable for Path Parameter /
+RequestParam to handle Query parameters ?
+@RequestBody is to convert payload to Java object
+@ResponseBody is optional --> to convert retruned Java object to response body in various format based on Accept header.
+
+Association Mapping :
+@OneToMany, @ManyToOne, @JoinColumn, Cascade, EAGER vs LAZY FETCHING.
 
 Day 4:
-AOP, Validation of User input, Exception Handling, Unit Testing, Caching, HATEOAS
+AOP: Aspect, JoinPoint [ where all aspects can be weaved, Spring limitation is we can have methods and exception, Dynamic Aspects are not possible], PointCut [ selected Joinpoint], Advice [ how we weave like before, after, afterThrowing, around, afterReturning]
 
-
+https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/pointcuts.html

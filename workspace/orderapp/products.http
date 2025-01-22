@@ -2,6 +2,12 @@
 GET http://localhost:8080/api/products
 Accept:application/json
 
+
+### @name="GET PRODUCTS BY RANGE"
+GET http://localhost:8080/api/products?low=50000&high=200000
+Accept:application/json
+
+
 ### @name="GET PRODUCT BY ID"
 GET http://localhost:8080/api/products/2
 Accept:application/json
@@ -12,13 +18,13 @@ Accept:application/json
 Content-Type:application/json
 
 {
-  "name": "LG AC",
-  "price": 54000.00,
+  "name": "Samsung OLED",
+  "price": 154000.00,
   "quantity": 100
 }
 
 
 ### @name="UPDATE PRODUCT"
-PATCH http://localhost:8080/api/products/1?price=85613.00
+PATCH http://localhost:8080/api/products/1?price=8189.00
 Accept:application/json
 Content-Type:application/json

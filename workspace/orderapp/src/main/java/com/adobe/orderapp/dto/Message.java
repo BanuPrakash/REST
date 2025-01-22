@@ -5,24 +5,24 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-//import com.fasterxml.jackson.annotation.JsonFormat;
-//import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 
 public class Message {
-//    @JsonView(MessageView.Summary.class)
+    @JsonView(MessageView.Summary.class)
     private Long id;
 
-//    @JsonView(MessageView.Summary.class)
-//    @JsonFormat(pattern = "dd-MMM-yy")
+    @JsonView(MessageView.Summary.class)
+    @JsonFormat(pattern = "dd-MMM-yy")
     private LocalDate created;
 
-//    @JsonView(MessageView.Summary.class)
+    @JsonView(MessageView.Summary.class)
     private String title;
 
-//    @JsonView(MessageView.Summary.class)
+    @JsonView(MessageView.Summary.class)
     private Person author;
 
-//    @JsonView(MessageView.SummaryWithRecipients.class)
+    @JsonView(MessageView.SummaryWithRecipients.class)
     private List<Person> recipients;
 
     private String body;

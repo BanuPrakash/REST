@@ -1,17 +1,17 @@
 package com.adobe.orderapp.dto;
 
 
-//import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 
 public class Person {
 
-//    @JsonView(MessageView.Summary.class)
+    @JsonView(MessageView.Summary.class)
     private Long id;
 
-//    @JsonView(MessageView.Summary.class)
+    @JsonView(MessageView.Summary.class)
     private String firstname;
 
-//    @JsonView(MessageView.Summary.class)
+    @JsonView(MessageView.Summary.class)
     private String lastname;
 
     private String email;

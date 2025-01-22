@@ -16,10 +16,16 @@ public class ProductController {
     private final OrderService service; // Constructor DI, no need for @Autowired
 
     // GET http://localhost:8080/api/products
+    // GET http://localhost:8080/api/products?low=1000&high=50000
     // Accept: application/json
     @GetMapping()
-    public List<Product> getProducts() {
-        return  service.getProducts();
+    public List<Product> getProducts(@RequestParam(name = "low", defaultValue = "0.0") double low,
+                                     @RequestParam(name="high", defaultValue = "0.0") double high) {
+        if(low == 0.0 && high == 0.0) {
+            return service.getProducts();
+        } else {
+            return service.byRange(low, high);
+        }
     }
 
     // GET http://localhost:8080/api/products/2
