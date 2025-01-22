@@ -33,9 +33,9 @@ public class LogAspect {
     }
 
     @Around("execution(* com.adobe.orderapp.service.*.*(..))")
-    public Object doProfile(ProceedingJoinPoint jp) throws  Throwable {
+    public Object doProfile(ProceedingJoinPoint pjp) throws  Throwable {
         long start = new Date().getTime();
-            Object ret = jp.proceed(); // invoke actual method
+            Object ret = pjp.proceed(); // invoke actual method Product getProductById(1)
         long endTime = new Date().getTime();
         logger.info("Time : " + (endTime - start) + " ms");
         return  ret;

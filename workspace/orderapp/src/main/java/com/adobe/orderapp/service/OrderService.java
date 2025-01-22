@@ -1,5 +1,6 @@
 package com.adobe.orderapp.service;
 
+import com.adobe.orderapp.aop.Tx;
 import com.adobe.orderapp.entity.LineItem;
 import com.adobe.orderapp.entity.Order;
 import com.adobe.orderapp.entity.Product;
@@ -65,6 +66,9 @@ public class OrderService {
     public long getProductCount() {
         return productRepository.count(); // no of products in table
     }
+
+    @Tx
+//    @Secured
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
