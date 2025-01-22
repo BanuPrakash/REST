@@ -967,3 +967,43 @@ If Exceptions are thrown from Controller / RestController a special type of Aspe
 @ControllerAdvice  is internally @AfterThrowing advice but HttpServletRequest and HttpServletResponse aware
 
 ResponseEntity: Response data + headers
+
+Validation:
+```
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO INCREMENT
+    private int id;
+
+    @NotBlank(message = "Name is required")
+    private String name;
+
+    @Min(value=10, message = "Price ${validatedValue} should be equal or more than {value}")
+    private double price;
+
+    @Min(value=1, message = "Quantity ${validatedValue} should be equal or more than {value}")
+    private int quantity;
+
+ProductController:
+public Product addProduct(@RequestBody @Valid Product p) {
+
+
+MethodArgumentNotValidException: 
+Validation failed addProduct(com.adobe.orderapp.entity.Product) with 2 errors: 
+
+[Field error  default message [Price 0.0 should be equal or more than 10]] 
+
+[Field error default message [Quantity -100 should be equal or more than 1]] 
+
+BindingResult is an interface which dictates how the object that stores the result of validation should store and retrieve the result of the validation
+```
+
+
+
+
+

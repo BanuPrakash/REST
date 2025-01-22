@@ -3,6 +3,7 @@ package com.adobe.orderapp.api;
 import com.adobe.orderapp.entity.Product;
 import com.adobe.orderapp.exception.EntityNotFoundException;
 import com.adobe.orderapp.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class ProductController {
     // payload of product
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED) // 201
-    public Product addProduct(@RequestBody Product p) {
+    public Product addProduct(@RequestBody @Valid Product p) {
         return  service.addProduct(p);
     }
 
