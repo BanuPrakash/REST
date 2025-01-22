@@ -1,6 +1,7 @@
 package com.adobe.orderapp.client;
 
 import com.adobe.orderapp.entity.Product;
+import com.adobe.orderapp.exception.EntityNotFoundException;
 import com.adobe.orderapp.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +23,7 @@ public class ProductClient implements CommandLineRunner {
         updateProduct();
     }
 
-    private void updateProduct() {
+    private void updateProduct() throws EntityNotFoundException {
         Product p = orderService.updateProduct(2, 5200.00);
         System.out.println("After update");
         System.out.println(p);

@@ -4,6 +4,7 @@ import com.adobe.orderapp.aop.Tx;
 import com.adobe.orderapp.entity.LineItem;
 import com.adobe.orderapp.entity.Order;
 import com.adobe.orderapp.entity.Product;
+import com.adobe.orderapp.exception.EntityNotFoundException;
 import com.adobe.orderapp.repo.OrderRepository;
 import com.adobe.orderapp.repo.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -73,12 +74,13 @@ public class OrderService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(int id) {
-//        Optional<Product> opt = productRepository.findById(id);
-//        if(opt.isPresent()) {
-//            return opt.get();
-//        }
-        return productRepository.findById(id).get();
+    public Product getProductById(int id) throws EntityNotFoundException{
+        Optional<Product> opt = productRepository.findById(id);
+        if(opt.isPresent()) {
+            return opt.get();
+        }
+        throw  new EntityNotFoundException("Product with id " + id + " doesn't exist!!");
+//        return productRepository.findById(id).get();
     }
 
     public Product addProduct(Product p) {
@@ -90,7 +92,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Product updateProduct(int id, double price) {
+    public Product updateProduct(int id, double price) throws EntityNotFoundException{
         productRepository.updateProduct(id, price);
         return  getProductById(id);
     }

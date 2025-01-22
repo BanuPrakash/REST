@@ -936,3 +936,34 @@ AOP: Aspect, JoinPoint [ where all aspects can be weaved, Spring limitation is w
 
 https://docs.spring.io/spring-framework/reference/core/aop/ataspectj/pointcuts.html
 
+=====
+
+Annotations: metadata.
+1) Who uses it?
+    a) COMPILER
+    b) CLASSLOADER
+    c) RUNTIME [ JRE ]
+2) Where can I use it?
+    a) FIELD
+    b) METHOD
+    c) TYPE [ class / interface / annotation]
+    d) PARAMETER
+
+==========
+
+http://localhost:8080/api/products/2 
+STATUS CODE -> 200
+
+http://localhost:8080/api/products/234
+SCODE --> 500 should have been 404 RESOURCE NOT FOUND
+
+Expected: Product with Id: 234 doesn't exist!!!
+
+400 series is client side errors
+500 series is SERver side Error
+
+If Exceptions are thrown from Controller / RestController a special type of Aspect called as ControllerAdvice [afterThrowing] gets invoked.
+
+@ControllerAdvice  is internally @AfterThrowing advice but HttpServletRequest and HttpServletResponse aware
+
+ResponseEntity: Response data + headers

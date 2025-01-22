@@ -1,6 +1,7 @@
 package com.adobe.orderapp.api;
 
 import com.adobe.orderapp.entity.Product;
+import com.adobe.orderapp.exception.EntityNotFoundException;
 import com.adobe.orderapp.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class ProductController {
     // GET http://localhost:8080/api/products/2
     // Accept: application/json
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable("id") int id) {
+    public Product getProductById(@PathVariable("id") int id) throws EntityNotFoundException {
         return  service.getProductById(id);
     }
 
@@ -50,7 +51,7 @@ public class ProductController {
     // Accept: application/json
     // Content-type: application/json
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") int id, @RequestParam("price") double price) {
+    public Product updateProduct(@PathVariable("id") int id, @RequestParam("price") double price) throws EntityNotFoundException  {
         return  service.updateProduct(id, price);
     }
 }

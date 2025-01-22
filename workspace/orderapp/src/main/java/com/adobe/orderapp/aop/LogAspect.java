@@ -2,10 +2,7 @@ package com.adobe.orderapp.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,4 +37,11 @@ public class LogAspect {
         logger.info("Time : " + (endTime - start) + " ms");
         return  ret;
     }
+
+
+    @AfterThrowing(value = "execution(* com.adobe.orderapp.service.*.*(..))", throwing = "ex")
+    public void catchException(JoinPoint jp, Exception ex) throws Throwable{
+        logger.info("Boom :-(" + ex.getMessage());
+    }
+
 }
