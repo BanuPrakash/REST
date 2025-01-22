@@ -1003,6 +1003,33 @@ Validation failed addProduct(com.adobe.orderapp.entity.Product) with 2 errors:
 BindingResult is an interface which dictates how the object that stores the result of validation should store and retrieve the result of the validation
 ```
 
+Unit Testing: Testing in Isolation.
+Unit Testing Frameworks: JUnit, TestNG
+
+Dependency:
+Controller --> service --> Repository --> Database
+
+To Test Service we need to mock Repository
+To test Controller we need to mock Service.
+
+MockAPI: Mockito, EasyMock, JMock, ...
+
+spring-boot-starter-test by default includes:
+1) Junit-jupeter as Unit testing framework
+2) Mockito for mocking
+3) Hamcrest for collection assertion
+4) json-path to validate json
+https://jsonpath.com/
+
+
+@WebMvcTest loads only MVC relavent beans [link TestDispatcherServlet , HandlerMapping] within Spring Container, other beans like @Service,
+@Component, @Respoistory ... will not be loaded within the spring container
+
+MockMvc is made avaialble using which we can make API calls GET / POST ..
+
+@WebMvcTest(ProductController.class) --> loads only ProductController into Container
+
+
 
 
 
