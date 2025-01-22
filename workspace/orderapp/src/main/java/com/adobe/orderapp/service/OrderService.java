@@ -96,4 +96,11 @@ public class OrderService {
         productRepository.updateProduct(id, price);
         return  getProductById(id);
     }
+
+    @Transactional
+    public Product updateBuiltIn(int id, double price) throws EntityNotFoundException {
+        Product p = productRepository.findById(id).get();
+        p.setPrice(price); // DIRTY CHECKING
+        return p;
+    }
 }

@@ -6,7 +6,11 @@ import com.adobe.orderapp.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +41,29 @@ public class ProductController {
         return  service.getProductById(id);
     }
 
+    // GET http://localhost:8080/api/products/cache/2
+    // Accept: application/json
+    // SpEL
+    // key is id value will be returned data from method
+    @Cacheable(value = "productCache", key = "#id")
+    @GetMapping("/cache/{id}")
+    public Product getProductByCacheId(@PathVariable("id") int id) throws EntityNotFoundException {
+        System.out.println("Cache Miss!!!");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        return  service.getProductById(id);
+    }
+
+    // GET http://localhost:8080/api/products/etag/2
+    // Accept: application/json
+    @GetMapping("/etag/{id}")
+    public ResponseEntity<Product> getProductByIdAndEtag(@PathVariable("id") int id) throws EntityNotFoundException {
+        Product p =  service.getProductById(id);
+        return ResponseEntity.ok().eTag(Long.toString(p.hashCode())).body(p);
+    }
 
     // POST http://localhost:8080/api/products
     // Accept: application/json
@@ -51,8 +78,15 @@ public class ProductController {
     // PATCH http://localhost:8080/api/products/1?price=8999.00
     // Accept: application/json
     // Content-type: application/json
+    @CachePut(value = "productCache", key="#id")
     @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable("id") int id, @RequestParam("price") double price) throws EntityNotFoundException  {
-        return  service.updateProduct(id, price);
+//        return  service.updateProduct(id, price); // custom JP-QL
+        return service.updateBuiltIn(id, price);
+    }
+
+    @CacheEvict(value = "productCache", key="#id")
+    public String deleteProduct(@PathVariable("id") int id) {
+        return  "Product deleted!!!";
     }
 }

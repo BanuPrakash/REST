@@ -35,6 +35,6 @@ Content-Type:application/json
 }
 
 ### @name="UPDATE PRODUCT"
-PATCH http://localhost:8080/api/products/1?price=8189.00
+PATCH http://localhost:8080/api/products/1?price=7777.00
 Accept:application/json
 Content-Type:application/json

@@ -1,0 +1,8 @@
+### @name="GET PRODUCT BY ID"
+GET http://localhost:8080/api/products/etag/2
+Accept:application/json
+
+### @name="GET PRODUCT BY ID by passing Etag"
+GET http://localhost:8080/api/products/etag/2
+Accept:application/json
+If-None-Match:"48005640"

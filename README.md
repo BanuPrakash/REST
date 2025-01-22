@@ -1030,7 +1030,128 @@ MockMvc is made avaialble using which we can make API calls GET / POST ..
 @WebMvcTest(ProductController.class) --> loads only ProductController into Container
 
 
+=============================================
+Pending Projections from RestController.
+
+Caching
+
+* Client Side Caching
+* Server Side Caching
+* Middle tier Caching
 
 
+Client Side Caching:
+* Cache-Control
+* ETag
 
+How can we generate ETag?
+1) using hashCode() of entity
+2) if JPA is used to map entity to database table we can use @Version column [ db column]
+ @Version
+ private int version;
 
+ intially we will have the value of version in db as 0.
+ any update we do, JPA increments it by 1
+ Make sure mutations happens only thro JPA
+
+ Also this will help in handling Concurrency.
+
+Data Corruption:
+```
+ 3 | LG AC        |  54000 |       100 
+
+ Client 1: buys 5
+READ
+ 3 | LG AC        |  54000 |       100 
+
+    updates qty to 95
+
+ client 2: buys 10
+
+READ
+ 3 | LG AC        |  54000 |       100 
+
+    updates qty to 90
+
+final product can be 
+ 3 | LG AC        |  54000 |       90
+ OR
+3 | LG AC        |  54000 |       95
+
+```
+
+With Version:
+```
+3 | LG AC        |  54000 |       100  | 0
+
+ Client 1: buys 5
+READ
+ 3 | LG AC        |  54000 |       100 | 0
+
+    updates qty to 95
+
+    update products set quantity = 95, version = version + 1 where id = 3 and version = 0
+
+client 2: buys 10
+
+READ
+ 3 | LG AC        |  54000 |       100 |0
+
+    updates qty to 90
+     update products set quantity = 90, version = version + 1 where id = 3 and version = 0
+
+final product can be 
+ 3 | LG AC        |  54000 |       90
+ OR
+3 | LG AC        |  54000 |       95
+Only Tx is possible, other tx fails
+But first commit wins, second commit is failed
+```
+
+GET http://localhost:8080/api/products/etag/2
+Accept:application/json
+
+Response Header:
+HTTP/1.1 200 
+ETag: "48005640"
+Content-Type: application/json
+
+===================================
+
+Server Side Caching:
+1) Database level using ORM
+Ehcache ==> ORM will fetch from database and persist the data in files [generally]
+SwarmCache Hibernate configuration
+
+2) Web application level Cache [Spring container level]
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+ </dependency>
+```
+
+By default it gives ConcurrentMapCache [key / value] --> In memory Cache and CacheManager
+
+Need to enable @EnableCaching --> any @Configuration file
+```
+@SpringBootApplication
+@EnableCaching
+public class OrderappApplication {
+```
+Cache the returned value:
+  @Cacheable(value = "productCache", key = "#id")
+
+Update the Cache:
+ @CachePut(value = "productCache", key="#id")
+
+Remove from Cache:
+@CacheEvict(value = "productCache", key="#id")
+
+Better evicting should be scheduled
+@EnableScheduling
+public class OrderappApplication {
+
+    https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
+
+Configure Redis as CacheManager..

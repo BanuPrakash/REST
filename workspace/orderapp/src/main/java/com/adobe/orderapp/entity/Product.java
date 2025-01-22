@@ -26,6 +26,9 @@ public class Product {
     @Min(value=1, message = "Quantity ${validatedValue} should be equal or more than {value}")
     private int quantity;
 
+    @Version
+    private int version;
+
 //    public Product() {
 //    }
 //

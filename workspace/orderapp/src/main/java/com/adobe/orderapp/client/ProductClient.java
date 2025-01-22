@@ -46,9 +46,9 @@ public class ProductClient implements CommandLineRunner {
 
     private void addProducts() {
         if(orderService.getProductCount() == 0) {
-            orderService.addProduct(new Product(0, "iPhone 16", 98000.00, 100));
-
-            orderService.addProduct(new Product(0, "Wacom", 4500.99,100));
+//            orderService.addProduct(new Product(0, "iPhone 16", 98000.00, 100));
+//
+//            orderService.addProduct(new Product(0, "Wacom", 4500.99,100));
         }
     }
 }
