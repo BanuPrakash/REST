@@ -1263,5 +1263,21 @@ Note:
 MicroService for Product CRUD --> Spring Data REST
 MicroService for Ordering --> Spring REST web
 
-=========
+Spring Data REST and Web can't co-exist
+Spring Data REST uses @BasePathAwareController in case if we need explict endpoints,
+can't use @RestController
 
+New Project with mysql, jpa, rest repositories
+
+Create entity and JpaRepository, no need for Service or Controller tier code
+
+http://localhost:8080/products
+http://localhost:8080/products?page=0&size=2
+http://localhost:8080/products/search/findByQuantity?quantity=100
+http://localhost:8080/products/search/getByRange?l=10000&h=500000
+
+spring.data.rest.base-path=/api
+http://localhost:8080/api/products
+
+Suppose if we need customization use @BasePathAwareController
+=========
