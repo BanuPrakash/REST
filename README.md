@@ -1197,3 +1197,71 @@ class Product implements Serializable
 Redis Client: nodejs
 
 $ npx redis-commander
+http://127.0.0.1:8081/
+
+=====================================================
+
+Messages for i18n
+```
+messages.properties --> default file for messages [ could be success or error messages]
+Product 
+   @NotBlank(message = "{NotBlank.product.name}") // from properties file
+//  @NotBlank(message = "Name is required")
+    private String name;
+
+
+POST http://localhost:8080/api/products
+Accept:application/json
+Content-Type:application/json
+Accept-Language: fr
+ messages_fr.propertes
+
+Configure ReloadableResourceBundleMessageSource --> done in MessageConfig
+
+```
+https://martinfowler.com/articles/richardsonMaturityModel.html
+
+HATEOAS [Level 3 RESTful]
+HATEOAS stands for Hypermedia as the Engine of Application State. 
+It's a principle that guides how clients and servers interact in a RESTful environment.
+
+How does HATEOAS work?
+* HATEOAS includes hypermedia links in API responses. 
+* This allows clients to navigate and interact with resources without needing to know the API structure in advance. 
+* HATEOAS provides information dynamically, enabling clients to find available actions and resources. 
+
+Benefits of HATEOAS
+* Increases discoverability of RESTful APIs [Else we need to expose REST API docs]
+* Allows clients to interact with network applications without hard-coded knowledge of the API structure 
+
+Good to have for applications like Patient-Doctor appointmint, StarBucks, Swiggy or any ecommerce sort of application.
+
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+```
+WebMvcLinkBuilder: Programatically adding links to the ResponseEntity
+Alternativley use Spring-data-rest, which automates adding links
+
+RepresentationModel can be CollectionModel [collection + links], EntityModel[ entity + links]
+https://www.iana.org/
+
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL_FORMS)
+Affordance
+
+======================
+
+Spring Data REST:
+Spring Data REST is part of the umbrella Spring Data project [JPA ,Mongo] and makes it easy to build hypermedia-driven REST web services on top of Spring Data repositories [JpaRepository, MongoRepository]
+Note: 
+1) no need for explicilty configuring WebMvcLinkBuilder
+2) By default it creates endpoints for Spring Data repositories [ no need for @RestController]
+
+MicroService for Product CRUD --> Spring Data REST
+MicroService for Ordering --> Spring REST web
+
+=========
+

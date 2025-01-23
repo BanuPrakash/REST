@@ -1,5 +1,6 @@
 package com.adobe.orderapp.api;
 
+import com.adobe.orderapp.dto.StringMsg;
 import com.adobe.orderapp.entity.Product;
 import com.adobe.orderapp.exception.EntityNotFoundException;
 import com.adobe.orderapp.service.OrderService;
@@ -15,11 +16,14 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @Tag(name = "Product API", description = "Product API Service")
 @RestController
@@ -27,6 +31,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final OrderService service; // Constructor DI, no need for @Autowired
+
+    @GetMapping("/hateos/{id}")
+    public ResponseEntity<EntityModel<Product>> getProductWithLinksId(@PathVariable("id") int id) throws EntityNotFoundException {
+
+        Product p =   service.getProductById(id);
+        EntityModel<Product> entityModel = EntityModel.of(p,
+                linkTo(methodOn(ProductController.class).getProductWithLinksId(id)).withSelfRel()
+                        .andAffordance(afford(methodOn(ProductController.class).updateProduct(id, 0.0)))
+                        .andAffordance(afford(methodOn(ProductController.class).addProduct(null))),
+
+//                        .andAffordance(afford(methodOn(ProductController.class).deleteProduct(0))
+//                        ),
+                linkTo(methodOn(ProductController.class).getProducts(0,0)).withRel("products"));
+
+        return ResponseEntity.ok(entityModel);
+    }
 
     // GET http://localhost:8080/api/products
     // GET http://localhost:8080/api/products?low=1000&high=50000
@@ -104,7 +124,7 @@ public class ProductController {
     }
 
     @CacheEvict(value = "productCache", key="#id")
-    public String deleteProduct(@PathVariable("id") int id) {
-        return  "Product deleted!!!";
+    public StringMsg deleteProduct(@PathVariable("id") int id) {
+        return  new StringMsg("Product deleted!!!");
     }
 }

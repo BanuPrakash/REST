@@ -12,10 +12,15 @@ Accept:application/json
 GET http://localhost:8080/api/products/2
 Accept:application/json
 
+### @name="GET PRODUCT HATEOAS BY ID"
+GET http://localhost:8080/api/products/hateos/2
+Accept:application/json
+
 ### @name="ADD PRODUCT"
 POST http://localhost:8080/api/products
 Accept:application/json
 Content-Type:application/json
+
 
 {
   "name": "Samsung OLED",
@@ -27,6 +32,7 @@ Content-Type:application/json
 POST http://localhost:8080/api/products
 Accept:application/json
 Content-Type:application/json
+Accept-Language: fr
 
 {
   "name": "",
