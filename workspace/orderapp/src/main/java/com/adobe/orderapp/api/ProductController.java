@@ -3,18 +3,25 @@ package com.adobe.orderapp.api;
 import com.adobe.orderapp.entity.Product;
 import com.adobe.orderapp.exception.EntityNotFoundException;
 import com.adobe.orderapp.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Product API", description = "Product API Service")
 @RestController
 @RequestMapping("api/products")
 @RequiredArgsConstructor
@@ -34,8 +41,19 @@ public class ProductController {
         }
     }
 
+
     // GET http://localhost:8080/api/products/2
     // Accept: application/json
+    @Operation(
+            description = "Service that return a Product",
+            summary = "This service returns a Product by the ID",
+            responses = {
+                    @ApiResponse(description = "Successful Operation", responseCode = "200",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = Product.class))),
+                    @ApiResponse(responseCode = "404", description = "Product  Not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication Failure", content = @Content(schema = @Schema(hidden = true)))
+            })
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") int id) throws EntityNotFoundException {
         return  service.getProductById(id);

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name="products")
 @NoArgsConstructor
@@ -12,18 +14,21 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 @Builder
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO INCREMENT
     private int id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "{NotBlank.product.name}")
+//    @NotBlank(message = "Name is required")
     private String name;
 
-    @Min(value=10, message = "Price ${validatedValue} should be equal or more than {value}")
+    @Min(value = 10, message = "{Min.product.price}")
+//    @Min(value=10, message = "Price ${validatedValue} should be equal or more than {value}")
     private double price;
 
-    @Min(value=1, message = "Quantity ${validatedValue} should be equal or more than {value}")
+    @Min(value = 1, message = "{Min.product.quantity}")
+//    @Min(value=1, message = "Quantity ${validatedValue} should be equal or more than {value}")
     private int quantity;
 
     @Version

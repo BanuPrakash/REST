@@ -1155,3 +1155,45 @@ public class OrderappApplication {
     https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
 
 Configure Redis as CacheManager..
+
+==
+Redis as Cache Manager, HATEOAS, Spring Data Rest, RestTemplate, RestClient, Async,
+
+
+
+
+
+==================
+
+
+Day 4 Recap:
+AOP: PointCut by expression or by Annotation, @Transactional, @ControllerAdvice: Any exceptions thrown from @Controller or @RestController @ControllerAdivce catches are writes custom data back to client.
+EntityNotFoundException
+validation: @Valid --> MethodArgumentNotValidException
+
+UnitTesting by Mocking Service tier code.
+
+Caching:ETag and ConcurrentMapCache [ @ConditionalOnMissingBean ]
+@EnableCache, @Cacheable, @CachePut, @CacheEvict [Avoid this, use @EnableScheduling and @Scheduled]
+
+
+Day 5:
+Redis Container:
+docker run -d --name=some-redis -p 6379:6379 redis
+
+Redis:
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+```
+
+By including above dependency RedisCacheManager will be available
+
+class Product implements Serializable 
+
+Redis Client: nodejs
+
+$ npx redis-commander
