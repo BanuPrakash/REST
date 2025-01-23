@@ -1267,7 +1267,7 @@ Spring Data REST and Web can't co-exist
 Spring Data REST uses @BasePathAwareController in case if we need explict endpoints,
 can't use @RestController
 
-New Project with mysql, jpa, rest repositories
+New Project with mysql, jpa, rest repositories, lombok
 
 Create entity and JpaRepository, no need for Service or Controller tier code
 
@@ -1281,3 +1281,51 @@ http://localhost:8080/api/products
 
 Suppose if we need customization use @BasePathAwareController
 =========
+
+Async operations in Spring Boot
+
+Rest Clients: Consuming REST Api in Java based applications:
+1) RestTemplate
+2) WebClient
+3) RestClient [ Spring boot 3+ ]
+
+Assume we are building a application for Discharing a Patient:
+
+// synchronous code --> Blocking sequential execution
+
+```
+    public String dischargePatient(String patientId, String patientName) {
+        billingProcess.processBill();
+        medicalRecordsService.updatePatientHistory(); // discharge summary
+        houseKeepingService.cleanAndAssign();
+        notificationService.notifyPatients();
+        // s1
+        // s2
+        return "Patient is discharge ...";
+    }
+
+```
+
+Solution: Use Events
+
+Project with "web" dependency
+
+@EnableAsync on any @Configuration class
+
+@Async --> execute the method by using Thread from Thread-pool
+
+Declarative HTTP client using HttpExchange
+
+HttpExchange can be used with RestTemplate / RestClient or WebClient
+
+
+Apache Benchmark:
+
+ab -c 10 -n 100 http://localhost:8080/api/posts
+
+===================
+
+Reactive Programming : Flux and Mono; Security; Intro to MS
+
+
+

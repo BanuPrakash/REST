@@ -1,0 +1,10 @@
+### @name="Discharge Patient"
+
+POST http://localhost:8080/api/discharge
+Accept: application/json
+Content-Type: application/json
+
+{
+  "patientId": "124",
+  "patientName": "Larry"
+}
