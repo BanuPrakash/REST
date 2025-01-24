@@ -1325,7 +1325,68 @@ ab -c 10 -n 100 http://localhost:8080/api/posts
 
 ===================
 
-Reactive Programming : Flux and Mono; Security; Intro to MS
+Recap:
 
+HATEOAS, WebMvcLinkBuilder, Spring Data REST on top of Data Repositories like MongoRepository/ JpaRepostiory, @BasePathAwareController.
 
+Asynchronous programming: @EnableAsync, @Async, ApplicationEvent, @EventListener 
 
+=================
+
+Day 6:
+
+Monitoring:
+* Notify that the system is at fault
+* Focuses on the collection of data
+* Discovering faults
+
+Spring Boot Actuator is a module that provides production-ready features to monitor and manage appliciton.
+It provides endpoints and metrics for monitoring
+
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+ </dependency>
+
+ application.properties
+
+management.endpoint.health.show-details=always
+#management.endpoints.web.exposure.include=health,metrics,info,prometheus
+management.endpoints.web.exposure.exclude=
+management.endpoints.web.exposure.include=*
+management.metrics.distribution.percentiles-histogram.http.server.requests=true
+
+http://localhost:8080/actuator
+http://localhost:8080/actuator/metrics
+http://localhost:8080/actuator/metrics/http.server.requests
+http://localhost:8080/actuator/metrics/jvm.threads.live
+
+```
+
+https://prometheus.io/
+Prometheus is an open-source systems monitoring and alerting toolkit 
+Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels.
+
+scrapes data from endpoint and stores it as time series data
+
+Grafana : Generate Dashboard
+``
+  <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+Docker Compose:
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+    looks for compose.yml file in your application and runs docker compose up
+
+http://localhost:9090/
+http_server_requests_seconds_count
+```

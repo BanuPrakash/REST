@@ -1,0 +1,17 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./cfg/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./cfg/rules.yml:/etc/prometheus/rules.yml
+    ports:
+      - 9090:9090
+# alert-manager:
+#   image: prom/alertmanager
+#   volumes:
+#     - "./alertmanager.yml:/alertmanager/alertmanager.yml"
+#  zipkin:
+#    image: 'openzipkin/zipkin:latest'
+#    ports:
+#      - '9411:9411'
