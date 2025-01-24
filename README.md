@@ -1477,4 +1477,29 @@ For Reactive Spring boot application use "webflux" [ Netty] instead of "web" mod
 time blocking code: 10032 ms
 time non-blocking code: 1 ms
 
-Resume @ 11:30
+Reactive database:
+R2DBC stands for Reactive Relational Database Connectivity, a specification to integrate SQL databases using reactive drivers.
+
+spring.data.r2dbc.repositories.enabled=true
+spring.r2dbc.url=r2dbc:h2:mem://./testdb
+
+automatically spring data executes these files
+resources/schema.sql --> DDL 
+resources/data.sql --> DML
+
+instead of JpaRepository --> R2dbcRepository [ ReactiveCrudRepository ]
+public interface UserRepository extends  R2dbcRepository<UserEntity, String> {
+
+===================
+
+Some Databases like no-SQL MongoDB supports tailable cursor
+
+Tailable Cursors
+By default, MongoDB automatically closes a cursor when the client exhausts all results in the cursor. 
+However, for capped collections you can use a tailable cursor that remains open after the client exhausts the results in the initial cursor. 
+
+========
+
+New Spring boot application: lombok, reactive web , reactive mongoDB
+
+docker run --name some-mongo -p 27017:27017 -d mongodb/mongodb-community-server:latest
