@@ -40,14 +40,14 @@ public class MongoReactiveApplication /*implements  CommandLineRunner*/{
         return  args -> {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Movie> movieList = objectMapper.readValue(resource.getInputStream(), new TypeReference<List<Movie>>() {
-                     
+
                     });
                     System.out.println(movieList);
-//            Flux.fromIterable(movieList)
-//                    .delayElements(Duration.ofSeconds(2))
-//                    .flatMap(movie -> this.movieRepository.save(movie))
-//                    .doOnComplete(() -> System.out.println("Complete adding movies!!!"))
-//                    .subscribe();
+            Flux.fromIterable(movieList)
+                    .delayElements(Duration.ofSeconds(2))
+                    .flatMap(movie -> this.movieRepository.save(movie))
+                    .doOnComplete(() -> System.out.println("Complete adding movies!!!"))
+                    .subscribe();
         };
     }
 

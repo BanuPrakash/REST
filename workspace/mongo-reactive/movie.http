@@ -1,0 +1,10 @@
+POST http://localhost:8080/movie
+Content-Type:application/json
+Accept:application/json
+
+{
+  "title": "titanic",
+  "genre": "Adventure",
+  "year": 2019,
+  "imdbRating": 4.3
+}
