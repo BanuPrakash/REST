@@ -1503,3 +1503,9 @@ However, for capped collections you can use a tailable cursor that remains open 
 New Spring boot application: lombok, reactive web , reactive mongoDB
 
 docker run --name some-mongo -p 27017:27017 -d mongodb/mongodb-community-server:latest
+
+docker exec -it some-mongo
+# mongosh
+
+default is "test" database
+test> db.createCollection("movies", {capped:true, size:1234567, max:100})
