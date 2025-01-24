@@ -1509,3 +1509,17 @@ docker exec -it some-mongo
 
 default is "test" database
 test> db.createCollection("movies", {capped:true, size:1234567, max:100})
+
+With Web FLux we can have functional Routes instead of @Controller or @RestController
+
+```
+  return RouterFunctions.route()
+                .GET("/router/customers", handler::loadCustomers)
+                .GET("/router/customers/stream", handler::loadCustomerStream)
+                .GET("/router/customer/{input}", handler::findCustomers)
+                .POST("/router/customer", handler::saveCustomer)
+                .build();
+```
+
+Security and Intro to MicroService
+
