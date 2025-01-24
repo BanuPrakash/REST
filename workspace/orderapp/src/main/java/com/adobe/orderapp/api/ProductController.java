@@ -4,6 +4,7 @@ import com.adobe.orderapp.dto.StringMsg;
 import com.adobe.orderapp.entity.Product;
 import com.adobe.orderapp.exception.EntityNotFoundException;
 import com.adobe.orderapp.service.OrderService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -123,6 +124,7 @@ public class ProductController {
         return service.updateBuiltIn(id, price);
     }
 
+    @Hidden
     @CacheEvict(value = "productCache", key="#id")
     public StringMsg deleteProduct(@PathVariable("id") int id) {
         return  new StringMsg("Product deleted!!!");

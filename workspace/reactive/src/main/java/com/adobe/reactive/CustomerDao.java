@@ -18,7 +18,7 @@ public class CustomerDao {
         }
     }
 
-    // blocking
+    // blocking, after 10 seconds List<Customer> is sent to the caller
     public List<Customer> getCustomers() {
         return IntStream.rangeClosed(1, 10)
                 .peek(CustomerDao::sleepEx)
@@ -27,7 +27,7 @@ public class CustomerDao {
                 .collect(Collectors.toList());
     }
 
-    // non blocking
+    // non blocking, Flux is a Publisher
     public Flux<Customer> getCustomerStream() {
         return Flux.range(1, 10)
                 .delayElements(Duration.ofSeconds(1))

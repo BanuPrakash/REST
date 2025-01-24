@@ -1390,3 +1390,91 @@ Docker Compose:
 http://localhost:9090/
 http_server_requests_seconds_count
 ```
+
+Spring Docs --> Documentation of RESTful Endpoints
+RAML or OpenAPI
+
+```
+  <!-- OpenAPI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+               <version>2.5.0</version>
+        </dependency>
+
+http://localhost:8080/v3/api-docs
+http://localhost:8080/swagger-ui/index.html
+
+```
+
+Reactive Programming:
+Paradigm concerned with data streams and propagation of change
+
+HTTP Protocol --> PULL Protocol
+
+Subscription
+
+request(n) / cancel()
+
+onNext(data)
+
+
+5. OnComplete() / OnError()
+
+======
+
+Spring Boot reactive module uses Netty instead of Tomcat as web container.
+Netty server is event based, Tomcat and Jetty are Thread based container
+
+Tomcat and Jetty are Thread based container are good for CPU intense operations
+
+Netty or and event based Web containers are good for stream base non-blocking IO operations
+Example: Netflix or any OTT platform. Admin Dashboards for KPI , Monitoring dashbaords
+https://dzone.com/articles/spring-webflux-eventloop-vs-thread-per-request-mod
+
+Spring Boot Reactive module provides 2 types of publishers Flux [0...n] / Mono [0..1]
+
+Scenario 1: Cold Publisher
+```
+    // method to stream a movie
+
+    String<String> getMovie(String name) {
+        return Stream.of("Scene 1", "Scene 2" , "Scene 3" ...)
+    } 
+
+    // each scene will play for 2 seconds
+    Flux<String> netFlix = Flux.fromStream(() -> getMovie(name))
+        .delayElements(Duration.ofSeconds(2));
+
+    // User 1 watching
+    netFlix.subscribe(scene -> System.out.println("User 1 Watching " + scene));
+
+    // user 2 joins later, but still gets all the scene --> Cold Publisher
+       netFlix.subscribe(scene -> System.out.println("User 1 Watching " + scene));
+
+```
+Scenario 2: Hot Publisher
+```
+  Flux<String> movieTheatre = Flux.fromStream(() -> getMovie(name))
+        .delayElements(Duration.ofSeconds(2)).share(); // starts publishing even without and subscribers
+
+
+    // User 1 watching
+    movieTheatre.subscribe(scene -> System.out.println("User 1 Watching " + scene));
+
+    // user 2 joins later,  looses prev scene
+       movieTheatre.subscribe(scene -> System.out.println("User 1 Watching " + scene));
+```
+
+For Reactive Spring boot application use "webflux" [ Netty] instead of "web" module [Tomcat]
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-webflux</artifactId>
+</dependency>
+```
+
+time blocking code: 10032 ms
+time non-blocking code: 1 ms
+
+Resume @ 11:30

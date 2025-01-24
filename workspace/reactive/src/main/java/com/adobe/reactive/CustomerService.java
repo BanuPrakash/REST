@@ -20,7 +20,7 @@ public class CustomerService {
 
     public Flux<Customer> getCustomersStream() {
         long start = System.currentTimeMillis();
-        Flux<Customer> customers = dao.getCustomerStream(); // blocking
+        Flux<Customer> customers = dao.getCustomerStream(); // non blocking
         long end = System.currentTimeMillis();
         System.out.println("time non-blocking code: " + ( end - start) + " ms");
         return customers; // return publisher
