@@ -1523,3 +1523,76 @@ With Web FLux we can have functional Routes instead of @Controller or @RestContr
 
 Security and Intro to MicroService
 
+=========
+
+Day 7
+
+Recap:
+* @EnableCaching
+* @EnableScheduling
+* @EnableAsync --> Thread pool to be used with @Async placed on the method to specify that the method has to execute in a seperate thread.
+ApplicationEvent @EventListener, future & CompletableFuture
+
+Reactive Programming: based on stream and event emitting
+Flux and Mono are pre-defined publishers webflux module --> Netty Web Server instead of Tomcat Web Server
+Cold Publisher, Hot Publisher [share()]
+R2DBC [Reactive] should be used instead of JDBC [blocking code]
+ReactiveMongoRepository --> Capped Collection supports TailableCursor
+
+Flux.zip to combine Publisher [ interval]
+
+Instead of @RestController we can use functional Routes.
+
+-----------------------------
+
+Projections
+OrderRepository: findAll() gives Order, Customer and LineItem data, Product
+
+Order --> Customer is ManyToOne --> Default is  EAGER fetching
+Order --> LineItem is OneToMany --> default is LAZY, but we made it as EAGER
+LINEITEM --> Product is ManyToOne --> default is EAGER
+
+I need data for report :
+
+oid | order_date | first_name | email | total
+
+Solution: write SQL or JP-QL to Join the tables.
+
+```
+   
+//    @Query(value = "select o.oid,o.order_date, c.first_name, " +
+//            "c.email, o.total from orders o left outer join on customers c " +
+//            "where orders.customer_fk = c.email", nativeQuery = true)
+//    @Query("select o.oid, o.orderDate, c.firstName, c.email from Order o join o.customer c")
+//    List<Object[]> getReport();
+
+    @Query("select new com.adobe.orderapp.dto.ReportDTO(o.oid, o.orderDate, c.firstName, c.email) from Order o join o.customer c")
+    List<ReportDTO> getReport();
+```
+
+Spring Security
+
+Authentication and Authorization
+
+Project with Web and Security
+
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+ </dependency>
+```
+
+By including above depenendecy 
+1) we made all resources protected.
+2) gives you login and logout pages
+3) creates one user with username ="user" and generated password
+Using generated security password: 07b743c0-ce4a-4a7c-a756-8e8071e65fda
+http://localhost:8080/admin
+http://localhost:8080/hello
+
+http://localhost:8080/logout
+
+
+JSESSIONID=D84D2441A4F63778AEDCAF40A9B42E8D
+JSESSIONID=D84D2441A4F63778AEDCAF40A9B42E8D
