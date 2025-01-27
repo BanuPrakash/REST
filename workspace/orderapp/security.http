@@ -1,0 +1,54 @@
+### @name ="Register User"
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "peter@adobe.com",
+  "password": "secret",
+  "username": "Peter",
+  "roles": [ {
+    "name": "ROLE_USER",
+    "description": "Has basic rights"
+  }]
+}
+
+### @name ="Register Admin"
+
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "anna@adobe.com",
+  "password": "secret",
+  "username": "Anna",
+  "roles": [ {
+  "name": "ROLE_USER",
+  "description": "Has basic rights"
+},
+    {
+      "name": "ROLE_ADMIN",
+      "description": "Admin rights"
+    }]
+}
+
+
+### @name ="Admin Login"
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "anna@adobe.com",
+  "password": "secret"
+}
+
+
+### @name="access Protected Resource"
+
+GET http://localhost:8080/api/products
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbm5hQGFkb2JlLmNvbSIsImlhdCI6MTczNzk1OTYwOCwiZXhwIjoxNzM3OTYxMDQ4LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sInJvbGVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwiaXNzIjoiaHR0cHM6Ly9hdXRzZXJ2ZXIuYWRvYmUuY29tIn0.J29G82e5tjv30n9pRlfagZPeFmsro4gcHtXs7a7FgrM

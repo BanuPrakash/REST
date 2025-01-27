@@ -1614,5 +1614,41 @@ https://bcrypt-generator.com/
 
 =========
 
-Resume @ 11:20
+RESTful has to be Stateless.
 
+Using Tokens for Authorization.
+https://jwt.io/
+
+HEADER.
+PAYLOAD. --> contains claims like principle, IAT, EXP, ISS, AUTHORITES
+SIGNATURE --> HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+your-256-bit-secret
+)
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.
+SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+
+Adding Security using JWT to orderapp:
+1) dependencies:
+for security and JWT:
+
+2) User <---> ROLE entities many to many relationship [ JPA for Security]
+3) UserDao
+4) UserDetailsServiceImpl
+5) application.properties
+jwt.secret=TopSecretValuetobeUsedForMyApplicationusingSpringBootBoom
+
+6) JwtService to generate a token and validate the token
+7) AuthenticationService [ service to register and login]
+
+http://server.com/resource
+Authorization: Bearer <<token>>
+8) SecurityConfig
+9) JwtAuthenticationFilter
+
+
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbm5hQGFkb2JlLmNvbSIsImlhdCI6MTczNzk1OTYwOCwiZXhwIjoxNzM3OTYxMDQ4LCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sInJvbGVzIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwiaXNzIjoiaHR0cHM6Ly9hdXRzZXJ2ZXIuYWRvYmUuY29tIn0.J29G82e5tjv30n9pRlfagZPeFmsro4gcHtXs7a7FgrM
