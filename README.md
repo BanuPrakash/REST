@@ -1594,5 +1594,25 @@ http://localhost:8080/hello
 http://localhost:8080/logout
 
 
-JSESSIONID=D84D2441A4F63778AEDCAF40A9B42E8D
-JSESSIONID=D84D2441A4F63778AEDCAF40A9B42E8D
+DAO Security
+```
+Connection Pool
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.32</version>
+        </dependency>
+```
+
+https://docs.spring.io/spring-security/reference/servlet/appendix/database-schema.html
+
+https://bcrypt-generator.com/
+
+=========
+
+Resume @ 11:20
+
